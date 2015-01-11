@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>graphmyvar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+
+    <!-- endbuild -->
+    <link rel="stylesheet" href="bower_components/jsPlumb/css/jsplumb.css" />
+    <link rel="stylesheet" href="styles/graphmyvar.css">
+
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <script src="bower_components/jquery/jquery-1.9.0-min.js"></script>
+    <script src="bower_components/jquery/jquery-ui-1.9.2.min.js"></script>
+    <script src="bower_components/jquery/jquery.ui.touch-punch-0.2.2.min.js"></script>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/graphlib/dist/graphlib.core.js"></script>
+    <script src="bower_components/graphlib/dist/graphlib.core.min.js"></script>
+    <script src="bower_components/dagre/dist/dagre.core.js"></script>
+    <script src="bower_components/dagre/dist/dagre.core.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+
+        <!-- build:js(.) scripts/plugins.js -->
+
+        <!-- endbuild -->
+        <script src="bower_components/jsPlumb/lib/jsBezier-0.6.js"></script>
+        <script src="bower_components/jsPlumb/lib/mottle-0.4.js"></script>
+        <script src="bower_components/jsPlumb/lib/biltong-0.2.js"></script>
+        <script src="bower_components/jsPlumb/src/util.js"></script>
+        <script src="bower_components/jsPlumb/src/browser-util.js"></script>
+        <script src="bower_components/jsPlumb/src/dom-adapter.js"></script>
+        <script src="bower_components/jsPlumb/src/jsPlumb.js"></script>
+        <script src="bower_components/jsPlumb/src/endpoint.js"></script>
+        <script src="bower_components/jsPlumb/src/connection.js"></script>
+        <script src="bower_components/jsPlumb/src/anchors.js"></script>
+        <script src="bower_components/jsPlumb/src/defaults.js"></script>
+        <script src="bower_components/jsPlumb/src/connectors-bezier.js"></script>
+        <script src="bower_components/jsPlumb/src/connectors-statemachine.js"></script>
+        <script src="bower_components/jsPlumb/src/connectors-flowchart.js"></script>
+        <script src="bower_components/jsPlumb/src/connector-editors.js"></script>
+        <script src="bower_components/jsPlumb/src/renderers-svg.js"></script>
+        <script src="bower_components/jsPlumb/src/renderers-vml.js"></script>
+        <script src="bower_components/jsPlumb/src/base-library-adapter.js"></script>
+        <script src="bower_components/jsPlumb/src/jquery.jsPlumb.js"></script>
+          
+        <script src="scripts/var1.js"></script>
+        <script src="scripts/graphmyvar.js"></script>
+
+        <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script src="scripts/main.js"></script>
+        <!-- endbuild -->
+
+
+
+        <div id="main">
+
+          <div class="demo chart-demo" id="chart-demo"></div>
+          <button id="but">add</button>
+        </div>
+</body>
+</html>
