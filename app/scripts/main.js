@@ -32,8 +32,10 @@ k.push([]);
 */
 // b.replique = b; pas prevu les cycle zut
 
-graphmyvar.walk(b, null, 0);
-jsPlumb.repaintEverything();
+  graphmyvar.walk(b);
+  graphmyvar.applyDOM('#chart-demo');
+  gmv_jsPlumb.drawPlumb(graphmyvar.getNodes());
+  jsPlumb.repaintEverything();
 });
 
 $('#but').click(function(e) {
