@@ -1,53 +1,35 @@
 var graphmyvar = (function () {
+
   var myArrayOfCssClass = ["windowarray", "windowobject", "window"]
-  var color = "gray";
-  var arrowCommon = { foldback:0.5, fillStyle:color, width:10 };
-  // var overlays = [ [ "Arrow", { location:0.8 }, arrowCommon ] ];
-  var overlays = [];
-  // var i = 0;
+  var nodeList = [];
 
   var arrange = function() {
-    var nodes = $(".node");
-  //  var instPlumb = jsPlumb.getInstance();
-  //  var edges = instPlumb.getAllConnections();
     var g = new dagre.graphlib.Graph();
     g.setGraph({});
     g.setDefaultEdgeLabel(function() { return {}; });
-
-    /*
-    for (var i = 0; i < nodes.length; i++) {
-      var n = nodes[i];
-      plumbNewNode(n);
-    }
-
-    for (var i = 0; i < nodes.length; i++) {
-      var n = nodes[i];
-      plumbConnect(n);
-    } */
-
-    for (var i = 0; i < nodes.length; i++) {
-      var n = nodes[i];
-      g.setNode(n.id, {width: 40, height: 10});
-      g.setEdge($(n).attr("parent"), n.id);
-    }
-
-    // for (var i = 0; i < edges.length; i++) {
-      // var c = edges[i];
-      // g.setEdge(c.source.id, c.target.id );
-    // }
+    
+    _.forEach(nodeList, function(n) {
+      g.setNode($(n).attr("id"), {width: 40, height: 1});
+      g.setEdge($(n).attr("parent"), $(n).attr("id"));
+    });  
     dagre.layout(g);
     g.nodes().forEach(function(v) {
       try {
         $("#" + v).css("left", g.node(v).x + "px");
         $("#" + v).css("top", g.node(v).y + "px");
+        /*var nude = g.node(v);
+        if (nude) {
+        nude.css({
+          'top': nude.y + "px",
+          'left': nude.x + "px"
+        });
+        }*/
       }
       catch(err) {
       }
     });
 
   };
-
-  var compId = function(z) { return z;};
 
   var stringy = function(s) {
     var res = "";
@@ -61,7 +43,8 @@ var graphmyvar = (function () {
   };
 
   var addNewNode = function(apid, aname, acontent, atype) {
-    var pid = apid;
+    var uid = _.uniqueId(["fifi"]);
+    console.log('addNewNode: name is', aname, '/ Id is', uid, '/ ParentId is' , apid);
     var aclasse = myArrayOfCssClass[2];
     if (atype === Array) {
       aclasse = myArrayOfCssClass[0];
@@ -73,89 +56,26 @@ var graphmyvar = (function () {
     }
 
     var s_aname = stringy(aname);
-    var s_acontent = stringy(acontent);
+    var s_acontent = stringy(acontent);    
 
-    var i = _.uniqueId(["fifi"]);
-
-    var baba = '#pop' + i;
-    var zzz;
+    var idPop = '#pop' + uid;
+    var myFuncHover = null;
     if ((atype !== Array) && (atype !== Object)) {
-      zzz = function() { $(baba).toggle();};
-    }
-    else zzz = null;
+      myFuncHover = function() { $(idPop).toggle();};
+    }    
 
-    var newNode = $('<div>').attr('id', compId(i)).attr('parent', pid)
-                    .addClass(aclasse).addClass('node').hover(zzz);
+    var newNode = $('<div>').attr('id', uid).attr('parent', apid).addClass(aclasse).hover(myFuncHover); // .addClass('node')
 
     var title = $('<div>').addClass('title').text(s_aname.substring(0,10));
     newNode.append(title);
 
-    var popo = $('<div>').attr('id', 'pop'+compId(i)).addClass("popover above").text(s_acontent).hide();
-    newNode.append(popo);
+    var divPop = $('<div>').attr('id', 'pop'+uid).addClass("popover above").text(s_acontent).hide();
+    newNode.append(divPop);
+    
+    nodeList.push(newNode);
 
-    /*
-    newNode.css({
-      'top': pid*5 +'em',
-      'left': i+2+'em'
-    });  */
-    return newNode;
+    return uid;
   };
-
-  /* ******************************
-   * Plumb specifications
-   * ******************************
-  */
-
-  var plumbNewNode = function(newNd) {
-
-    var connect = $('<div>').addClass('connect');
-    newNd.append(connect);
-
-    jsPlumb.makeTarget(newNd, {
-      anchor: 'Continuous'
-    });
-
-    jsPlumb.makeSource(connect, {
-      parent: newNd,
-      paintStyle:{ fillStyle:"blue", outlineColor:"black", outlineWidth:1 },
-      anchor: 'Continuous'
-    });
-
-    jsPlumb.addEndpoint(newNd, {
-      uuid: $(newNd).attr("id") + "-bottom",
-      anchor: "Bottom",
-      endpointStyle : { radius:3, fillStyle:color },
-      maxConnections: -1
-    });
-
-    jsPlumb.addEndpoint(newNd, {
-      uuid: $(newNd).attr("id") + "-top",
-      anchor: "Top",
-      endpointStyle : { radius:3, fillStyle:color },
-      maxConnections: -1
-    });
-    jsPlumb.draggable(newNd);
-  };
-
-  var plumbConnect = function(newNd) {
-    var idIs = $(newNd).attr("id");
-    var parentIs = $(newNd).attr("parent");
-    jsPlumb.connect({uuids:[parentIs + "-bottom", idIs + "-top" ],
-      		// connector : [ "Bezier", { curviness:10 } ],
-      		connector : [ "Flowchart", { stub:10 } ],
-          paintStyle: { strokeStyle: color, lineWidth: 1 }, overlays: overlays});
-  };
-
-
-  var addObject = function (_pid, _name, _content, _type) {
-    console.log('addObject: ', _pid, _name, _content, _type);
-    var nn = addNewNode(_pid, _name, _content, _type);
-    $('#chart-demo').append(nn);
-    plumbNewNode(nn);
-    plumbConnect(nn);
-    return $(nn).attr("id");
-  };
-
 
   var doWalk = function (oo, a_key, pid) {
     var _id = 0;
@@ -164,7 +84,7 @@ var graphmyvar = (function () {
       if (a_key) {
         _title = a_key;
       }
-      _id = addObject(pid, _title, null, Array);
+      _id = addNewNode(pid, _title, null, Array);
       _.forEach(oo, function(item) {
         doWalk(item, null, _id);
       });
@@ -176,17 +96,17 @@ var graphmyvar = (function () {
           _title = a_key;
         }
 
-        _id = addObject(pid, _title, null, Object);
+        _id = addNewNode(pid, _title, null, Object);
         _.forOwn(oo, function(myValue, myKey) {
           doWalk(myValue, myKey, _id);
         });
       }
       else {
         if (a_key) {
-          _id = addObject(pid, a_key, oo, null);
+          _id = addNewNode(pid, a_key, oo, null);
         }
         else {
-          _id = addObject(pid, oo, null, null);
+          _id = addNewNode(pid, oo, null, null);
         }
       }
     }
@@ -195,14 +115,30 @@ var graphmyvar = (function () {
   var doSetCss = function(arrayOfCssClass){
     myArrayOfCssClass = arrayOfCssClass;
   };
+  
+  var doApplyDOM = function(a_div) {
+    _.forEach(nodeList, function(a_node) {
+      $(a_div).append(a_node);
+    });
+    arrange();
+  };
+  
+  var doGetNodes = function() {
+    return nodeList;
+  };  
 
   return {
-    setCss : function (arrayOfCssClass){
+    setCss : function (arrayOfCssClass) {
       doSetCss(arrayOfCssClass);
     },
-    walk : function (oo, a_key, pid) {
-      doWalk(oo, a_key, pid);
-      arrange();
+    getNodes : function () {
+      return doGetNodes();
+    },    
+    applyDOM : function (a_div) {
+      doApplyDOM(a_div);      
+    },
+    walk : function (oo) {
+      doWalk(oo, null, 0);      
     }
   };
 
