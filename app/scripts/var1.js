@@ -22,16 +22,38 @@ var b =
 
 */
 
-/*
 [
-{a: 51, b:52, c:53, d:[true, false, null, "Exercitation sint enim dolore adipisicing. Laboris exercitation enim Lorem commodo enim aute"]},
-{q: 102, r:103, s:104},
-["un", {"email": "ruthiejackson@isostream.com", "phone": "+1 (949) 466-3044"}, {x: 1024}, {g:{gg:{}}}],
-[[[]]]
+  { 'name': 'barney',  'age': 36, 'blocked': false },
+  { 'name': 'fred',    'age': 40, 'blocked': true },
+  { 'name': 'pebbles', 'age': 1,  'blocked': false }
 ];
 
+/*
+[
+  {
+    a: 51, b:52, c:53,
+    d:[true, false, null, "Exercitation sint enim dolore adipisicing. Laboris exercitation enim Lorem commodo enim aute"]
+  },
+  {q: 102, r:103, s:104},
+  [
+    "un", 
+    {
+      "email": "ruthiejackson@isostream.com",
+      "phone": "+1 (949) 466-3044"
+    },
+    {
+      x: 1024
+    },
+    {
+      g:{gg:{}}
+    }
+  ],
+  [[[]]]
+];
 */
 
+
+/*
 {
  "fruits": [
    { "kiwis": 3,
@@ -46,7 +68,7 @@ var b =
      "poireaux": false
    }
 };
-
+*/
 
 /*
 var b = 
