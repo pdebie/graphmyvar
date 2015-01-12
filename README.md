@@ -33,11 +33,18 @@ To be detailed ...
 * lodash
 * jquery
 
-## Known problem
+## Known problems
 
 * Longs strings in array are bad rendered
 * Circular data are not tested so ...
  
+## Installation
+
+bower install don't give a good version for jsPlumb and Dagre.
+
+You must download this libraries and put them in the path describe in index.html
+
+Then grunt serve --force will work
 
 
 
